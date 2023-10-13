@@ -4,5 +4,5 @@ namespace App\Repositories;
 
 interface ModuleRepositoryInterface
 {
-    public function getModuleCourseById(string $courseId);
+    public function getModulesCourseById(string $courseId);
 }
