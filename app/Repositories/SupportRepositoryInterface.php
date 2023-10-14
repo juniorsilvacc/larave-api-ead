@@ -4,5 +4,7 @@ namespace App\Repositories;
 
 interface SupportRepositoryInterface
 {
-    public function getAll(array $filters = []);
+    public function getSupports(array $filters = []);
+
+    public function createSupport(array $data);
 }

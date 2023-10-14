@@ -22,7 +22,7 @@ class SupportRepository implements SupportRepositoryInterface
         return User::first();
     }
 
-    public function getAll(array $filters = [])
+    public function getSupports(array $filters = [])
     {
         return $this->getUserAuth()
             ->supports()
@@ -41,5 +41,16 @@ class SupportRepository implements SupportRepositoryInterface
                 }
             })
             ->get();
+    }
+
+    public function createSupport(array $data)
+    {
+        $support = $this->getUserAuth()->supports()->create([
+            'lesson_id' => $data['lesson'],
+            'description' => $data['description'],
+            'status' => $data['status'],
+        ]);
+
+        return $support;
     }
 }
