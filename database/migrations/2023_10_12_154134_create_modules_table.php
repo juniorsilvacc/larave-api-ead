@@ -10,12 +10,19 @@ return new class() extends Migration {
      */
     public function up(): void
     {
-        Schema::create('modules', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('course_id')->nullable(false);
-            $table->string('name');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('modules')) {
+            Schema::create('modules', function (Blueprint $table) {
+                $table->uuid('id')->primary();
+                $table->uuid('course_id');
+                $table->string('name');
+
+                $table->foreign('course_id')
+                ->references('id')
+                ->on('courses');
+
+                $table->timestamps();
+            });
+        }
     }
 
     /**
