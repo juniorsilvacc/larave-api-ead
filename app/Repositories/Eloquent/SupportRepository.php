@@ -3,11 +3,13 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Support;
-use App\Models\User;
 use App\Repositories\SupportRepositoryInterface;
+use App\Repositories\Traits\RepositoryTrait;
 
 class SupportRepository implements SupportRepositoryInterface
 {
+    use RepositoryTrait;
+
     private $model;
 
     public function __construct(
@@ -16,16 +18,21 @@ class SupportRepository implements SupportRepositoryInterface
         $this->model = $model;
     }
 
-    private function getUserAuth(): User
+    private function getSupport(string $id)
     {
-        // return auth()->user();
-        return User::first();
+        return $this->model->findOrFail($id);
+    }
+
+    public function getMySupports(array $filters = [])
+    {
+        $filters['user'] = true;
+
+        return $this->getSupports($filters);
     }
 
     public function getSupports(array $filters = [])
     {
-        return $this->getUserAuth()
-            ->supports()
+        return $this->model
             ->where(function ($query) use ($filters) {
                 if (isset($filters['lesson'])) {
                     $query->where('lesson_id', $filters['lesson']);
@@ -39,7 +46,14 @@ class SupportRepository implements SupportRepositoryInterface
                     $filter = $filters['filter'];
                     $query->where('description', 'LIKE', "%{$filter}%");
                 }
+
+                if (isset($filters['user'])) {
+                    $user = $this->getUserAuth();
+
+                    $query->where('user_id', $user->id);
+                }
             })
+            ->orderBy('updated_at')
             ->get();
     }
 
@@ -52,5 +66,17 @@ class SupportRepository implements SupportRepositoryInterface
         ]);
 
         return $support;
+    }
+
+    public function createReplyToSupportId(array $data, string $supportId)
+    {
+        $user = $this->getUserAuth();
+
+        $this->getSupport($supportId)
+            ->replies()
+            ->create([
+                'description' => $data['description'],
+                'user_id' => $user->id,
+            ]);
     }
 }
