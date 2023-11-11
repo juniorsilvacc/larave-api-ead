@@ -17,6 +17,9 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // php artisan tinker
+        // \App\Models\User::factory()->count(10)->create();
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
