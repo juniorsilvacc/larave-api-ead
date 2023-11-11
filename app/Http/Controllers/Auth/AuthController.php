@@ -29,4 +29,13 @@ class AuthController extends Controller
             'token' => $token,
         ]);
     }
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
 }
