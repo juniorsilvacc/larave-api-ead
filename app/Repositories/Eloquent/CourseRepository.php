@@ -17,14 +17,14 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function getAllCourses()
     {
-        $courses = $this->model->get();
+        $courses = $this->model->with('modules.lessons.views')->get();
 
         return $courses;
     }
 
-    public function getCourse($id)
+    public function getCourse(string $id)
     {
-        $course = $this->model->findOrFail($id);
+        $course = $this->model->with('modules.lessons')->findOrFail($id);
 
         return $course;
     }

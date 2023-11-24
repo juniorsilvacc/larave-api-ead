@@ -17,6 +17,8 @@ class ModuleFactory extends Factory
      */
     public function definition(): array
     {
+        // \App\Models\Module::factory()->count(10)->create(['course_id' => '']);
+
         return [
             'name' => fake()->name(),
             'course_id' => Course::factory(),

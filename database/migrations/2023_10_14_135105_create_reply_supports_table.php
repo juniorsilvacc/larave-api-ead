@@ -17,14 +17,6 @@ return new class() extends Migration {
                 $table->uuid('user_id');
                 $table->text('description');
 
-                $table->foreign('support_id')
-                ->references('id')
-                ->on('supports');
-
-                $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
-
                 $table->timestamps();
             });
         }

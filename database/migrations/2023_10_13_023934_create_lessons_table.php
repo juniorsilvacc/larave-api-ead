@@ -13,16 +13,11 @@ return new class() extends Migration {
         if (!Schema::hasTable('lessons')) {
             Schema::create('lessons', function (Blueprint $table) {
                 $table->uuid('id')->primary();
-                $table->uuid('module_id');
+                $table->uuid('module_id')->nullable(false);
                 $table->string('name')->unique();
                 $table->string('url')->unique();
                 $table->text('description')->nullable();
                 $table->string('video')->unique();
-
-                $table->foreign('module_id')
-                ->references('id')
-                ->on('modules');
-
                 $table->timestamps();
             });
         }

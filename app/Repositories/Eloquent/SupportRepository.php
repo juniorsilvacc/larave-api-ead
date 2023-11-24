@@ -25,8 +25,10 @@ class SupportRepository implements SupportRepositoryInterface
 
     public function getMySupports(array $filters = [])
     {
+        // Adiciona um filtro padrão para garantir que apenas os suportes do usuário autenticado sejam retornados
         $filters['user'] = true;
 
+        // Delega a execução para o método getSupports, passando os filtros aplicados
         return $this->getSupports($filters);
     }
 
@@ -47,9 +49,13 @@ class SupportRepository implements SupportRepositoryInterface
                     $query->where('description', 'LIKE', "%{$filter}%");
                 }
 
+                // Verifica se a chave 'user' está presente no array de filtros
                 if (isset($filters['user'])) {
+                    // Obtém o usuário autenticado (presumivelmente utilizando algum método personalizado)
                     $user = $this->getUserAuth();
 
+                    // Adiciona uma cláusula 'where' à consulta para filtrar por 'user_id'
+                    // A consulta resultante incluirá apenas registros onde 'user_id' é igual ao ID do usuário autenticado
                     $query->where('user_id', $user->id);
                 }
             })
@@ -59,9 +65,13 @@ class SupportRepository implements SupportRepositoryInterface
 
     public function createSupport(array $data)
     {
-        $support = $this->getUserAuth()->supports()->create([
-            'lesson_id' => $data['lesson'],
+        // Obtém o usuário autenticado atualmente.
+        $user = $this->getUserAuth();
+
+        // Cria um novo suporte associado ao usuário autenticado.
+        $support = $user->supports()->create([
             'description' => $data['description'],
+            'lesson_id' => $data['lesson'],
             'status' => $data['status'],
         ]);
 
@@ -72,7 +82,7 @@ class SupportRepository implements SupportRepositoryInterface
     {
         $user = $this->getUserAuth();
 
-        $this->getSupport($supportId)
+        return $this->getSupport($supportId)
             ->replies()
             ->create([
                 'description' => $data['description'],

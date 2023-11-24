@@ -26,11 +26,10 @@ class CreateReplySupportRequest extends FormRequest
                 'required',
                 'min: 3',
                 'max: 9999',
-                'string',
             ],
             'support' => [
                 'required',
-                'exists:reply_support,id',
+                'exists:supports,id',
             ],
         ];
     }

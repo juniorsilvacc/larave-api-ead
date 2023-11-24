@@ -15,9 +15,10 @@ class ModuleRepository implements ModuleRepositoryInterface
         $this->model = $model;
     }
 
-    public function getModulesCourseById($courseId)
+    public function getModulesCourseById(string $courseId)
     {
         $modules = $this->model
+            ->with('lessons.views')
             ->where('course_id', $courseId)
             ->get();
 

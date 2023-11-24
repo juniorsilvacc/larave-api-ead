@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateReplySupportRequest;
+use App\Http\Resources\ReplyResource;
 use App\Repositories\Eloquent\ReplySupportRepository;
 
 class ReplySupportController extends Controller

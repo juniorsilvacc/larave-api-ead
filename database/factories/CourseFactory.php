@@ -16,6 +16,7 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
+        // \App\Models\Course::factory()->count(5)->create();
         return [
             'name' => fake()->unique()->name(),
             'description' => fake()->unique()->sentence(20),

@@ -28,9 +28,13 @@ class Lesson extends Model
 
     public function views()
     {
+        // Define uma relação "hasMany" para o modelo View
         return $this->hasMany(View::class)
+            // Adiciona uma cláusula "where" à relação
             ->where(function ($query) {
+                // Verifica se um usuário está autenticado
                 if (auth()->check()) {
+                    // Adiciona uma cláusula "where" à consulta, filtrando pelo ID do usuário autenticado
                     return $query->where('user_id', auth()->user()->id);
                 }
             }

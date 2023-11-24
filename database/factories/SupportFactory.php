@@ -18,6 +18,9 @@ class SupportFactory extends Factory
      */
     public function definition(): array
     {
+        // \App\Models\Support::factory()->create();
+        // \App\Models\Support::factory()->count(5)->create(['user_id' => '', 'lesson_id' => '']);
+
         return [
             'description' => fake()->sentence(20),
             'status' => 'P',

@@ -18,6 +18,8 @@ class LessonFactory extends Factory
      */
     public function definition(): array
     {
+        // \App\Models\Lesson::factory()->count(20)->create(['module_id' => '']);
+
         $name = fake()->unique()->name();
 
         return [

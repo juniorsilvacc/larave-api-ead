@@ -28,7 +28,6 @@ class CreateSupportRequest extends FormRequest
                 'required',
                 'min: 3',
                 'max: 9999',
-                'string',
             ],
             'status' => [
                 'required',

@@ -22,6 +22,7 @@ class LessonRepository implements LessonRepositoryInterface
     {
         $lessons = $this->model
             ->where('module_id', $moduleId)
+            ->with('supports.replies')
             ->get();
 
         return $lessons;
@@ -36,16 +37,21 @@ class LessonRepository implements LessonRepositoryInterface
 
     public function markLessonViewed(string $lessonId)
     {
+        // Obtém o usuário autenticado
         $user = $this->getUserAuth();
 
+        // Procura por uma visualização existente da lição para o usuário autenticado
         $view = $user->views()->where('lesson_id', $lessonId)->first();
 
+        // Verifica se uma visualização já existe
         if ($view) {
+            // Se a lição já foi vista, incrementa a quantidade de visualizações
             return $view->update([
                 'qty' => $view->qty + 1,
             ]);
         }
 
+        // Se a lição ainda não foi vista, cria uma nova entrada no banco de dados
         return $user->views()->create([
             'lesson_id' => $lessonId,
         ]);

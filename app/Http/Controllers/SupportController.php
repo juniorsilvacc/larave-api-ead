@@ -19,16 +19,16 @@ class SupportController extends Controller
 
     public function index(Request $request)
     {
-        $modules = $this->repository->getSupports($request->all());
+        $supports = $this->repository->getSupports($request->all());
 
-        return SupportResource::collection($modules);
+        return SupportResource::collection($supports);
     }
 
     public function mySupports(Request $request)
     {
-        $modules = $this->repository->getMySupports($request->all());
+        $supports = $this->repository->getMySupports($request->all());
 
-        return SupportResource::collection($modules);
+        return SupportResource::collection($supports);
     }
 
     public function create(CreateSupportRequest $request)
