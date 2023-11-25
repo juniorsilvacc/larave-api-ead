@@ -3,6 +3,7 @@
 namespace Tests\Feature\Api\Auth;
 
 use App\Models\User;
+use Tests\Feature\Api\UtilsTrait;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
@@ -10,6 +11,8 @@ class AuthTest extends TestCase
     /**
      * A basic feature test example.
      */
+    use UtilsTrait;
+
     public function testFailAuth(): void
     {
         $response = $this->postJson('/auth', []);
@@ -39,8 +42,7 @@ class AuthTest extends TestCase
 
     public function testLogout(): void
     {
-        $user = User::factory()->create();
-        $token = $user->createToken('test')->plainTextToken;
+        $token = $this->createTokenUser();
 
         $response = $this->postJson('/logout', [], [
             'Authorization' => "Bearer {$token}",
@@ -58,8 +60,7 @@ class AuthTest extends TestCase
 
     public function testGetMe(): void
     {
-        $user = User::factory()->create();
-        $token = $user->createToken('test')->plainTextToken;
+        $token = $this->createTokenUser();
 
         $response = $this->getJson('/me', [
             'Authorization' => "Bearer {$token}",
