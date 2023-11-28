@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Feature\Api\Auth;
+namespace Tests\Feature\Api;
 
 use App\Models\Course;
-use Tests\Feature\Api\UtilsTrait;
 use Tests\TestCase;
 
 class CourseTest extends TestCase
@@ -13,7 +12,7 @@ class CourseTest extends TestCase
      */
     use UtilsTrait;
 
-    public function testUnauthenticated(): void
+    public function testCoursesUnauthenticated(): void
     {
         $response = $this->getJson('/courses');
 
