@@ -15,8 +15,6 @@ class ModuleTest extends TestCase
 
     public function testGetModulesCourseUnauthenticated(): void
     {
-        $course = Course::factory()->create();
-
         $response = $this->getJson('/courses/unauthenticated/modules');
 
         $response->assertStatus(401);
