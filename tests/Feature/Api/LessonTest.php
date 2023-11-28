@@ -50,21 +50,21 @@ class LessonTest extends TestCase
             ->assertJsonCount(10, 'data');
     }
 
-    public function testGetLessonUnauthenticated(): void
+    public function testGetSingleLessonUnauthenticated(): void
     {
         $response = $this->getJson('/lessons/unauthenticated');
 
         $response->assertStatus(401);
     }
 
-    public function testGetLessonNotFound(): void
+    public function testGetSingleLessonNotFound(): void
     {
         $response = $this->getJson('/lessons/not_found', $this->defaultHeaders());
 
         $response->assertStatus(404);
     }
 
-    public function testGetLesson(): void
+    public function testGetSingleLesson(): void
     {
         $lesson = Lesson::factory()->create();
 
