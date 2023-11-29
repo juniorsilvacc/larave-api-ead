@@ -19,6 +19,8 @@ class LessonResource extends JsonResource
             'name' => ucwords(strtolower($this->name)),
             'description' => $this->description,
             'video' => $this->video,
+            'views' => ViewResource::collection($this->whenLoaded('views')),
+            // Retornar recursos que podem ter relacionamentos e que desejo otimizar as consultas, evitando assim carregamento desnecessário
         ];
     }
 }
